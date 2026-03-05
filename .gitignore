@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.pid.lock
+*.seed
+
+# Coverage and test output
+coverage/
+.nyc_output/
+*.lcov
+
+# Build and distribution output
+dist/
+build/
+build-*/
+cmake-build-*/
+out/
+release/
+
+# C++ / Qt / CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Makefile
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.ilk
+*.idb
+*.obj
+*.pdb
+*.tlog/
+*.pro.user
+*.qtc_clangd/
+
+# Cache and temp files
+.cache/
+.parcel-cache/
+*.tsbuildinfo
+.tmp/
+temp/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor and IDE files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*~
+
+# Archives
+*.tgz
