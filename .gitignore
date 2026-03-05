@@ -29,6 +29,11 @@ cmake-build-*/
 out/
 release/
 
+# Launcher-downloaded game payload
+MinecraftConsoles-*/
+src/MLE-MP-MinecraftConsoles-*/
+*.zip
+
 # C++ / Qt / CMake generated files
 CMakeFiles/
 CMakeCache.txt
