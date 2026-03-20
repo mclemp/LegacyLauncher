@@ -17,7 +17,7 @@ HttpResponse HTTPHelper::SendAdvancedRequest(const std::wstring& address, const 
 	HINTERNET hConnect = WinHttpConnect(hSession, address.c_str(), port, 0);
 	if (!hConnect) { WinHttpCloseHandle(hSession); return response; }
 
-	HINTERNET hRequest = WinHttpOpenRequest(hConnect, method, path.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+	HINTERNET hRequest = WinHttpOpenRequest(hConnect, method, path.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_SECURE);
 	if (!hRequest) { WinHttpCloseHandle(hConnect); WinHttpCloseHandle(hSession); return response; }
 
 	for (const auto& header : headers) {

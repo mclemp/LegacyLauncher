@@ -15,7 +15,7 @@ bool LCEOnlineServices::isAccountValid() {
 }
 
 LCEOnlineServices::APIResponse LCEOnlineServices::AttemptAccountLogin(const std::string username, const std::string password) {
-	HttpResponse response = HTTPHelper::SendBasicRequest(L"38.49.215.81", L"accountLogin", 3502, L"POST", std::string(username + ":" + password));
+	HttpResponse response = HTTPHelper::SendBasicRequest(L"auth.goonchamber.gay", L"accountLogin", 443, L"POST", std::string(username + ":" + password));
 
 	if (response.body[0] == '-') {
 		//std::vector<std::string> responseData = 
