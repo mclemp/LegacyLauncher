@@ -24,7 +24,7 @@
     <ProjectGuid>{e9e63281-9ebe-47dd-8561-7e8b3b0de825}</ProjectGuid>
     <RootNamespace>Injector</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Lancher</ProjectName>
+    <ProjectName>Launcher</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Libs\Networking\LCEOnlineServices.cpp" />
+    <ClCompile Include="Libs\Networking\HTTPHelper.cpp" />
     <ClCompile Include="Libs\Config\Config.cpp" />
     <ClCompile Include="Libs\ImGui\imgui.cpp" />
     <ClCompile Include="Libs\ImGui\imgui_demo.cpp" />
@@ -151,19 +153,18 @@
     <ClCompile Include="Libs\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="Libs\ImGui\imgui_tables.cpp" />
     <ClCompile Include="Libs\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="Libs\TCP\Client\ServerCommunication.cpp" />
-    <ClCompile Include="Libs\TCP\Client\TCPClient.cpp" />
-    <ClCompile Include="Libs\TCP\PacketReader.cpp" />
-    <ClCompile Include="Libs\TCP\PacketWriter.cpp" />
-    <ClCompile Include="Libs\TCP\PacketHandler.cpp" />
-    <ClCompile Include="Libs\TCP\Packet\BasePacket.cpp" />
+    <ClCompile Include="Libs\Window\MojanglesTTF.cpp" />
     <ClCompile Include="Libs\Window\WindowHelper.cpp" />
     <ClCompile Include="Main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Libs\Panorama\PanoramaRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Libs\Networking\LCEOnlineServices.h" />
+    <ClInclude Include="Libs\Panorama\stb_image.h" />
+    <ClInclude Include="Libs\Networking\HTTPHelper.h" />
     <ClInclude Include="Libs\Config\Config.h" />
     <ClInclude Include="Libs\ImGui\imconfig.h" />
     <ClInclude Include="Libs\ImGui\imgui.h" />
@@ -176,22 +177,41 @@
     <ClInclude Include="Libs\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Libs\ImGui\imstb_textedit.h" />
     <ClInclude Include="Libs\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Libs\TCP\Client\ServerCommunication.h" />
-    <ClInclude Include="Libs\TCP\Client\TCPClient.h" />
-    <ClInclude Include="Libs\TCP\PacketHandler.h" />
-    <ClInclude Include="Libs\TCP\PacketReader.h" />
-    <ClInclude Include="Libs\TCP\PacketWriter.h" />
-    <ClInclude Include="Libs\TCP\Packet\BasePacket.h" />
-    <ClInclude Include="Libs\TCP\Packet\PacketTypes.h" />
-    <ClInclude Include="Libs\TCP\Packet\Types\ClientboundAccountErrorPacket.h" />
-    <ClInclude Include="Libs\TCP\Packet\Types\ServerboundLoginPacket.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\Packet\Types\ServerboundRegisterAccountPacket.h" />
     <ClInclude Include="Libs\Window\WindowHelper.h" />
+    <ClInclude Include="Libs\Panorama\PanoramaRenderer.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Libs\Window\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Libs\Panorama\Images\1\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_5.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_5.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_5.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_5.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

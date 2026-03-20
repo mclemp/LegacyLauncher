@@ -51,25 +51,19 @@
     <ClCompile Include="Libs\ImGui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Libs\TCP\Client\TCPClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Libs\TCP\PacketReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Libs\TCP\PacketWriter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Libs\TCP\PacketHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Libs\Config\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Libs\TCP\Packet\BasePacket.cpp">
+    <ClCompile Include="Libs\Networking\HTTPHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Libs\TCP\Client\ServerCommunication.cpp">
+    <ClCompile Include="Libs\Window\MojanglesTTF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\Panorama\PanoramaRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\Networking\LCEOnlineServices.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,41 +104,105 @@
     <ClInclude Include="Libs\ImGui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\TCP\Client\TCPClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\PacketReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\PacketWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\Packet\BasePacket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\Packet\PacketTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\Packet\Types\ServerboundLoginPacket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Libs\TCP\PacketHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Libs\Config\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\TCP\Packet\Types\ServerboundRegisterAccountPacket.h">
+    <ClInclude Include="Libs\Networking\HTTPHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\TCP\Packet\Types\ClientboundAccountErrorPacket.h">
+    <ClInclude Include="Libs\Panorama\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\TCP\Client\ServerCommunication.h">
+    <ClInclude Include="Libs\Panorama\PanoramaRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\Networking\LCEOnlineServices.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Libs\Window\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Libs\Panorama\Images\1\panorama_0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\1\panorama_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\1\panorama_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\1\panorama_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\1\panorama_4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\1\panorama_5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\2\panorama_0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\2\panorama_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\2\panorama_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\2\panorama_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\2\panorama_4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\2\panorama_5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\3\panorama_0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\3\panorama_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\3\panorama_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\3\panorama_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\3\panorama_4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\3\panorama_5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\4\panorama_0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\4\panorama_1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\4\panorama_2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\4\panorama_3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\4\panorama_4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Libs\Panorama\Images\4\panorama_5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

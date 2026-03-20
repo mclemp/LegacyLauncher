@@ -2,131 +2,154 @@
 #include <windows.h>
 #include "Libs/Window/WindowHelper.h"
 #include <string>
-#include "Libs/TCP/Client/TCPClient.h"
-#include "Libs/TCP/PacketHandler.h"
-//#include "Libs/TCP/Packet/Types/ServerboundLoginPacket.h"
 #include "Libs/Config/Config.h"
-//#include "Libs/TCP/Packet/Types/ClientboundObfuscationPacket.h"
-
-#include "Libs/TCP/Packet/Types/ServerboundRegisterAccountPacket.h"
-
-#include "Libs/TCP/Packet/Types/ClientboundAccountErrorPacket.h"
-//#include "Libs/TCP/Client/ServerCommunication.h"
+#include "Libs/Networking/LCEOnlineServices.h"
 
 
 static WindowHelper* mainWindow = NULL;
-static TCPClient* serverConnection = NULL;
 static Config* configSystem = NULL;
 
+static bool showLoginScreen = false;
+
 void drawWindowContent();
-void handlePacket(const BasePacket* packet);
+void drawBackgroundContent();
 //std::string GetMachineGuid(); //could be better but i dont give a shit just needs to be basic
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char* pCmdLine, int nCmdShow) {
-    configSystem = new Config("Injector");
-    serverConnection = new TCPClient();
+    configSystem = new Config("MCLEMPLauncher");
 
-    mainWindow = new WindowHelper("Injector", "INJECTOR");
+    mainWindow = new WindowHelper("Minecraft Legacy MP Launcher", "LAUNCHER");
     mainWindow->onContentDraw = drawWindowContent;
+    mainWindow->onBackgroundDraw = drawBackgroundContent;
 
-    PacketHandler::onPacket(handlePacket);
-
-    serverConnection->setOnMessage(PacketHandler::feed);
-    serverConnection->connectToServer("38.49.215.81", 2053);
+    showLoginScreen = !(LCEOnlineServices::DoesHaveAccount() && LCEOnlineServices::isAccountValid());
 
     //this will capture main thread and prevent code below from calling till program exit
     mainWindow->StartWindow(hInstance); 
 
     //do any cleanup here
 
-    delete serverConnection;
     delete configSystem;
     delete mainWindow;
 }
 
-void handlePacket(const BasePacket* packet) {
-    if (packet->getPacketType() == PacketTypes::RegisterAccount) {
-        ClientboundAccountErrorPacket* castedPacket = (ClientboundAccountErrorPacket*)packet;
-        errorHolder = castedPacket->getError();
+namespace CustomGUI {
+    bool Button(const char* label, const ImVec2& size = ImVec2(0, 0)) {
+        if (size.x == 0 && size.y == 0) {
+            ImFont* font = ImGui::GetFont();
+            int fontSize = font->FontSize * 0.50f;
+
+            ImVec2 TextSize = font->CalcTextSizeA(fontSize, 5000, 5000, label);
+            float padding = 15;
+
+            ImVec2 ButtonSize = ImVec2(TextSize.x + (padding * 2), TextSize.y + padding);
+            ImVec2 CursorPos = ImGui::GetCursorPos();
+
+            bool realButtonValue = ImGui::InvisibleButton(label, ButtonSize);
+
+            ImU32 buttonColor = ImGui::GetColorU32(ImVec4(0.8, 0.8, 0.8, 0.9));
+            ImU32 borderColor = ImGui::GetColorU32(ImVec4(0.1, 0.1, 0.1, 0.9));
+
+            ImU32 textColor = ImGui::GetColorU32(ImVec4(0.2, 0.2, 0.2, 0.9));
+
+            if (realButtonValue || ImGui::IsItemHovered()) {
+                buttonColor = ImGui::GetColorU32(ImVec4(0, 0.8, 0, 0.9));
+                borderColor = ImGui::GetColorU32(ImVec4(0.9, 0.9, 0.9, 0.9));
+
+                textColor = ImGui::GetColorU32(ImVec4(0.9, 0.9, 0.9, 0.9));
+
+            }
+
+            ImDrawList* drawList = ImGui::GetForegroundDrawList();
+
+            drawList->AddRectFilled(ImVec2(CursorPos.x, CursorPos.y + 30), ImVec2(CursorPos.x + ButtonSize.x, (CursorPos.y + 32.5) + ButtonSize.y), buttonColor);
+            drawList->AddRect(ImVec2(CursorPos.x, CursorPos.y + 30), ImVec2(CursorPos.x + ButtonSize.x, (CursorPos.y + 32.5) + ButtonSize.y), borderColor, 0, 0, 1);
+
+            drawList->AddText(font, fontSize, ImVec2(CursorPos.x + padding, (CursorPos.y + 32.5) + (padding / 2)), textColor, label);
+
+            return realButtonValue;
+        }
     }
-    /*if (packet->getPacketType() == PacketTypes::StartObfuscation) {
-        ClientboundObfuscationPacket* castedPacket = (ClientboundObfuscationPacket*)(packet);
-        BasePacket::readyObfuscation(castedPacket->getKey());
-        
-        
-    }*/
 }
 
-std::string errorHolder = "";
+void drawBackgroundContent() { }
 
 
 void drawWindowContent() {
-    if (serverConnection->isSocketValid() && serverConnection->isRunning()) {
-        ImGui::Text("Socket Valid");
+    ImGuiIO& io = ImGui::GetIO();
+    //RECT title_bar_rect = WindowHelper::win32_titlebar_rect(mainWindow->getWindowHandle()); 
 
-        if (!errorHolder.empty()) {
-            ImGui::Text("%s", errorHolder.c_str());
-        }
+    if (showLoginScreen) {
+        static std::string ErrorString = "";
 
-        ImGui::Text(PacketHandler::debug.c_str());
+        ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) - (150), (io.DisplaySize.y / 4) - 10));
+
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 0.9f));
+        if (!ErrorString.empty()) ImGui::Text(ErrorString.c_str());
+        ImGui::PopStyleColor();
+
+        ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.3, 0.3, 0.3, 0.75));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.35, 0.35, 0.35, 0.75));
+        ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(0.35, 0.35, 0.35, 0.75));
 
         static char username_inputBuffer[16];
         static char password_inputBuffer[64];
 
-        ImGui::InputText("Username", username_inputBuffer, 16);
-        ImGui::InputText("Password", password_inputBuffer, 64);
+        ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) - (150), io.DisplaySize.y / 4));
+        ImGui::PushItemWidth(300);
+        ImGui::InputText("##username", username_inputBuffer, 16);
 
-        if (ImGui::Button("Send Request")) {
-            ServerboundRegisterAccountPacket* registerPacket = new ServerboundRegisterAccountPacket(username_inputBuffer, password_inputBuffer);
+        if (std::string(username_inputBuffer).empty()) {
+            ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) - (150) + 5, (io.DisplaySize.y / 4) + 2));
 
-            serverConnection->sendMessage(registerPacket->getString());
-
-            delete registerPacket;
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8, 0.8, 0.8, 0.75));
+            ImGui::Text("Username");
+            ImGui::PopStyleColor();
         }
 
-        /*if (BasePacket::isObfuscationReady()) {
+        ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) - (150), (io.DisplaySize.y / 4) + 35));
+        ImGui::PushItemWidth(300);
+        ImGui::InputText("##password", password_inputBuffer, 64, ImGuiInputTextFlags_Password);
 
-        } else {
-            static bool attemptedConfigLoad = false;
+        if (std::string(password_inputBuffer).empty()) {
+            ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) - (150) + 5, ((io.DisplaySize.y / 4) + 35) + 2));
 
-            if (!attemptedConfigLoad) {
-                std::map<std::string, std::string> configFile = configSystem->ReadConfigFile();
-                auto it = configFile.find("key");
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8, 0.8, 0.8, 0.75));
+            ImGui::Text("Password");
+            ImGui::PopStyleColor();
+        }
 
-                if (it != configFile.end()) {
-                    if (!it->second.empty()) {
-                        ServerboundLoginPacket* loginPacket = new ServerboundLoginPacket(it->second);
+        ImGui::PopStyleColor();
+        ImGui::PopStyleColor();
+        ImGui::PopStyleColor();
 
-                        serverConnection->sendMessage(loginPacket->getString());
+        ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) - 150, (io.DisplaySize.y / 4) + 70));
 
-                        delete loginPacket;
-                    }
-                }
+        if (CustomGUI::Button("Register")) {
 
-                attemptedConfigLoad = true;
+
+        }
+
+        ImGui::SetCursorPos(ImVec2((io.DisplaySize.x / 2) + 82, (io.DisplaySize.y / 4) + 70));
+
+        if (CustomGUI::Button("Login")) {
+            LCEOnlineServices::APIResponse response = LCEOnlineServices::AttemptAccountLogin(username_inputBuffer, password_inputBuffer);
+
+            if (response.wasError) {
+                ErrorString = response.GetData();
+            } else {
+
             }
-
-            static char inputBuffer[64];
-
-            ImGui::InputText("Key", inputBuffer, 64);
-
-            if (ImGui::Button("Send")) {
-                std::string wrappedString(inputBuffer);
-
-                ServerboundLoginPacket* loginPacket = new ServerboundLoginPacket(wrappedString);
-
-                serverConnection->sendMessage(loginPacket->getString());
-
-                delete loginPacket;
-            }
-        }*/
-    } else {
-        ImGui::Text("Attempting Connection To Legacy Online Services");
-
-        if (!serverConnection->isConnecting()) {
-            serverConnection->connectToServer("38.49.215.81", 2053);
         }
     }
+
+
+    //ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+
+    //RECT title_bar_rect = WindowHelper::win32_titlebar_rect(mainWindow->getWindowHandle());
+
+    //drawList->AddRectFilled(ImVec2(10, title_bar_rect.bottom + 10), ImVec2(io.DisplaySize.x - 10, io.DisplaySize.y - 10), ImGui::GetColorU32(ImVec4(0.2f, 0.2f, 0.2f, 0.5f)));
+    //drawList->AddRect(ImVec2(10, title_bar_rect.bottom + 10), ImVec2(io.DisplaySize.x - 10, io.DisplaySize.y - 10), ImGui::GetColorU32(ImVec4(0.2f, 0.2f, 0.2f, 0.5f)), 0, 0, 1);
 }
 
 

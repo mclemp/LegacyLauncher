@@ -34,14 +34,16 @@ public:
 	bool StartWindow(HINSTANCE instance);
 
 	std::function<void()> onContentDraw;
+	std::function<void()> onBackgroundDraw;
 
-	ImVec4 TitleColor = ImVec4(0.1803921569, 0, 0.2431372549, 1);
-	ImVec4 WindowColor = ImVec4(0.2431372549, 0, 0.3294117647, 1);
+	ImVec4 TitleColor = ImVec4(0.2, 0.2, 0.2, 1);
+	ImVec4 WindowColor = ImVec4(0.2, 0.2, 0.2, 1);
 	ImVec4 ButtonColor = ImVec4();
-	ImVec4 ButtonHoverColor = ImVec4(0.2431372549, 0, 0.3254901961, 1);
+	ImVec4 ButtonHoverColor = ImVec4(0.25, 0.25, 0.25, 1);
 	ImVec4 CloseButtonColor = ImVec4(1, 0, 0, 1);
 
-
+	HWND getWindowHandle() { return this->windowHandle; };
+	static RECT win32_titlebar_rect(HWND handle);
 protected:
 	HWND windowHandle;
 
@@ -63,7 +65,6 @@ private:
 	void CleanupDeviceD3D();
 	void CreateRenderTarget();
 	void CleanupRenderTarget();
-	static RECT win32_titlebar_rect(HWND handle);
 	static CustomTitleBarButtonRects win32_get_title_bar_button_rects(HWND handle, const RECT* title_bar_rect);
 	static LRESULT win32_custom_title_bar_example_window_callback(HWND handle, UINT message, WPARAM w_param, LPARAM l_param);
 

@@ -1,5 +1,7 @@
 #include "WindowHelper.h"
 
+#include "../Panorama/PanoramaRenderer.h"
+
 //readme.txt
 
 #ifndef GET_X_PARAM
@@ -9,15 +11,14 @@
 #ifndef GET_Y_PARAM
 #define GET_Y_PARAM(lp) ((int)(short)HIWORD(lp))
 #endif
-
-
-
+extern "C" {
+    extern unsigned char MojanglesTTF_compressed_data[35186];
+    extern unsigned int MojanglesTTF_compressed_size;
+}
 WindowHelper::WindowHelper(const char* WindowName, const char* WindowKlassName) {
     this->WindowName = WindowName;
     this->WindowKlassName = WindowKlassName;
-
 }
-
 
 bool WindowHelper::StartWindow(HINSTANCE instance) {
     if (!SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)) {
@@ -28,7 +29,7 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
     WNDCLASSEXA window_class = { 0 };
     {
         window_class.cbSize = sizeof(window_class);
-        window_class.lpszClassName = this->WindowName;
+        window_class.lpszClassName = this->WindowKlassName;
         window_class.lpfnWndProc = win32_custom_title_bar_example_window_callback;
         window_class.style = CS_HREDRAW | CS_VREDRAW;
     }
@@ -43,6 +44,12 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
         ::UnregisterClassA(window_class.lpszClassName, window_class.hInstance);
         return 1;
     }
+   
+#ifdef USING_PANORAMA
+    PanoramaRenderer panorama = PanoramaRenderer();
+    HMODULE module = GetModuleHandleA(NULL);
+    panorama.Initialize(module, g_pd3dDevice, 800, 500);
+#endif
 
     // Show the window
     ::ShowWindow(this->windowHandle, SW_SHOWDEFAULT);
@@ -64,7 +71,14 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
     ImGui_ImplWin32_Init(this->windowHandle);
     ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 
-    io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\segoeui.ttf", 45.0f); //import at high scale so its not like blurry
+    ImFontConfig config;
+    config.FontDataOwnedByAtlas = false;
+    config.OversampleH = 0;
+    config.OversampleV = 0;
+
+    io.Fonts->Clear(); // clear fonts if you loaded some before (even if only default one was loaded)
+
+    io.Fonts->AddFontFromMemoryCompressedTTF((void*)MojanglesTTF_compressed_data, MojanglesTTF_compressed_size, 32);
 
     bool done = false;
     while (!done)
@@ -124,14 +138,29 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
         ImGui::GetForegroundDrawList()->AddLine(ImVec2(CloseCenter.x + 5.5, CloseCenter.y - 5.5), ImVec2(CloseCenter.x - 5, CloseCenter.y + 5), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), 1.25);
         
 
-        ImGui::GetForegroundDrawList()->AddText(ImGui::GetFont(), 30, ImVec2(5, -1), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), this->WindowName);
+        ImGui::GetForegroundDrawList()->AddText(ImGui::GetFont(), 20, ImVec2(5, 5), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), this->WindowName);
+
+#ifdef USING_PANORAMA
+        panorama.Render(g_pd3dDeviceContext, ImGui::GetTime());
+
+        ImGui::GetBackgroundDrawList()->AddImage((ImTextureID)panorama.GetSRV(), ImVec2(0, 0), ImGui::GetIO().DisplaySize);
+#endif
 
         ImGui::SetNextWindowPos(ImVec2(0, title_bar_rect.bottom));
         ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x, io.DisplaySize.y - title_bar_rect.bottom));
-
-        ImGui::Begin("WindowContent", NULL, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+        ImGui::Begin("BackgroundContent", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
         {
             ImGui::SetWindowFontScale(0.5f);
+
+            if (onBackgroundDraw != NULL) onBackgroundDraw();
+        }
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(0, title_bar_rect.bottom));
+        ImGui::SetNextWindowSize(ImVec2(io.DisplaySize.x, io.DisplaySize.y - title_bar_rect.bottom));
+        ImGui::Begin("WindowContent", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground);
+        {
+            ImGui::SetWindowFontScale(0.75f);
 
             if (onContentDraw != NULL) onContentDraw();
         }
