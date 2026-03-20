@@ -9,6 +9,7 @@
 #include <d3dcompiler.h>
 #include <unordered_set>
 #include <unordered_map>
+#include "../ResourcePuller/ResourcePuller.h"
 
 using namespace DirectX;
 
@@ -233,11 +234,6 @@ ID3D11ShaderResourceView* PanoramaRenderer::GetSRV() {
     return srv;
 }
 
-struct ImageData {
-    unsigned char* data; DWORD size;
-    ImageData(unsigned char* _data, DWORD _size) : data(_data), size(_size) {}
-};
-
 static const int panoramaMap[6] = { 1, 3, 4, 5, 0, 2 };
 std::unordered_map<int, std::vector<int>> panoramaImages = {
     {1, { IDB_PNG1,  IDB_PNG2,  IDB_PNG3,  IDB_PNG4,  IDB_PNG5,  IDB_PNG6 }},
@@ -246,18 +242,15 @@ std::unordered_map<int, std::vector<int>> panoramaImages = {
     {4, { IDB_PNG19, IDB_PNG20, IDB_PNG21, IDB_PNG22, IDB_PNG23, IDB_PNG24 }},
 };
 
-std::vector<ImageData> GetPanoramaImages(HMODULE handle, int index) {
-    std::vector<ImageData> imageData;
+std::vector<ResourcePuller::ResourceData> GetPanoramaImages(HMODULE handle, int index) {
+    std::vector<ResourcePuller::ResourceData> imageData;
 
     if (index > panoramaImages.size()) {
         index = 1;
     }
 
     for (int resourceIndex : panoramaImages[index]) {
-        HRSRC hRes = FindResource(handle, MAKEINTRESOURCE(resourceIndex), RT_RCDATA);
-        HGLOBAL hData = LoadResource(handle, hRes);
-
-        imageData.push_back(ImageData((unsigned char*)LockResource(hData), SizeofResource(handle, hRes)));
+        imageData.push_back(ResourcePuller::LoadResourceData((uintptr_t)handle, resourceIndex));
     }
 
     
@@ -266,8 +259,7 @@ std::vector<ImageData> GetPanoramaImages(HMODULE handle, int index) {
 
 
 bool PanoramaRenderer::LoadCubemap(HMODULE handle, ID3D11Device* device) {
-
-    std::vector<ImageData> panoramaImages = GetPanoramaImages(handle, 4);
+    std::vector<ResourcePuller::ResourceData> panoramaImages = GetPanoramaImages(handle, 4);
 
     int w, h, c;
     unsigned char* images[6];
@@ -275,7 +267,7 @@ bool PanoramaRenderer::LoadCubemap(HMODULE handle, ID3D11Device* device) {
     stbi_set_flip_vertically_on_load(false);
 
     for (int i = 0; i < 6; i++) {
-        ImageData panoramaData = panoramaImages[panoramaMap[i]];
+        ResourcePuller::ResourceData panoramaData = panoramaImages[panoramaMap[i]];
 
         images[i] = stbi_load_from_memory(panoramaData.data, panoramaData.size, &w, &h, &c, 4);
         if (!images[i]) {

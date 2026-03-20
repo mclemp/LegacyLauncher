@@ -1,6 +1,7 @@
 #include "WindowHelper.h"
 
 #include "../Panorama/PanoramaRenderer.h"
+#include <thread>
 
 //readme.txt
 
@@ -44,16 +45,42 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
         ::UnregisterClassA(window_class.lpszClassName, window_class.hInstance);
         return 1;
     }
-   
+
+    // Show the window
+    ::ShowWindow(this->windowHandle, SW_SHOWDEFAULT);
+    ::UpdateWindow(this->windowHandle);
+
+    std::thread render([this]() {
+        this->ImGuiRenderThread();
+        });
+
+    render.detach();
+
+    while (!renderDone) {
+        if (renderDone) break;
+        
+        // Poll and handle messages (inputs, window resize, etc.)
+        // See the WndProc() function below for our to dispatch events to the Win32 backend.
+        MSG msg;
+        while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
+        {
+            ::TranslateMessage(&msg);
+            ::DispatchMessage(&msg);
+            if (msg.message == WM_QUIT)
+                renderDone = true;
+        }
+    }
+    
+
+    return 0;
+}
+
+void WindowHelper::ImGuiRenderThread() {
 #ifdef USING_PANORAMA
     PanoramaRenderer panorama = PanoramaRenderer();
     HMODULE module = GetModuleHandleA(NULL);
     panorama.Initialize(module, g_pd3dDevice, 800, 500);
 #endif
-
-    // Show the window
-    ::ShowWindow(this->windowHandle, SW_SHOWDEFAULT);
-    ::UpdateWindow(this->windowHandle);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -80,21 +107,9 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
 
     io.Fonts->AddFontFromMemoryCompressedTTF((void*)MojanglesTTF_compressed_data, MojanglesTTF_compressed_size, 32);
 
-    bool done = false;
-    while (!done)
+    while (!renderDone)
     {
-        // Poll and handle messages (inputs, window resize, etc.)
-        // See the WndProc() function below for our to dispatch events to the Win32 backend.
-        MSG msg;
-        while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
-        {
-            ::TranslateMessage(&msg);
-            ::DispatchMessage(&msg);
-            if (msg.message == WM_QUIT)
-                done = true;
-        }
-        if (done)
-            break;
+        if (renderDone) break;
 
         // Handle window being minimized or screen locked
         if (g_SwapChainOccluded && g_pSwapChain->Present(0, DXGI_PRESENT_TEST) == DXGI_STATUS_OCCLUDED)
@@ -131,12 +146,12 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
         ImGui::GetForegroundDrawList()->AddLine(ImVec2(button_rects.minimize.left + 15, button_rects.minimize.bottom / 2), ImVec2(button_rects.minimize.right - 15, button_rects.minimize.bottom / 2), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), 1.25);
 
         ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(button_rects.close.left, button_rects.close.top), ImVec2(button_rects.close.right, button_rects.close.bottom), ImGui::GetColorU32(((title_bar_hovered_button == CustomTitleBarHoveredButton_Close) ? CloseButtonColor : ButtonColor)));
-        
+
         ImVec2 CloseCenter = ImVec2(button_rects.close.left - ((button_rects.close.left - button_rects.close.right) / 2), button_rects.close.bottom - ((button_rects.close.bottom - button_rects.close.top) / 2));
 
         ImGui::GetForegroundDrawList()->AddLine(ImVec2(CloseCenter.x - 5, CloseCenter.y - 5), ImVec2(CloseCenter.x + 5.5, CloseCenter.y + 5.5), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), 1.25);
         ImGui::GetForegroundDrawList()->AddLine(ImVec2(CloseCenter.x + 5.5, CloseCenter.y - 5.5), ImVec2(CloseCenter.x - 5, CloseCenter.y + 5), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), 1.25);
-        
+
 
         ImGui::GetForegroundDrawList()->AddText(ImGui::GetFont(), 20, ImVec2(5, 5), ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), this->WindowName);
 
@@ -187,8 +202,6 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
     CleanupDeviceD3D();
     ::DestroyWindow(this->windowHandle);
     ::UnregisterClassA(window_class.lpszClassName, window_class.hInstance);
-
-    return 0;
 }
 
 std::unordered_map<HWND, WindowHelper*> WindowHelper::linkedWindows;

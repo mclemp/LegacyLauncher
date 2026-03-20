@@ -1,5 +1,5 @@
 #include "LCEOnlineServices.h"
-#include "HTTPHelper.h"
+#include "HTTPSHelper.h"
 #include <sstream>
 #include <vector>
 #include <string>
@@ -14,16 +14,18 @@ bool LCEOnlineServices::isAccountValid() {
 	return false;
 }
 
-LCEOnlineServices::APIResponse LCEOnlineServices::AttemptAccountLogin(const std::string username, const std::string password) {
-	HttpResponse response = HTTPHelper::SendBasicRequest(L"auth.goonchamber.gay", L"accountLogin", 443, L"POST", std::string(username + ":" + password));
+LCEOnlineServices::LoginResponse LCEOnlineServices::AttemptAccountLogin(const std::string username, const std::string password) {
+	HttpsResponse response = HTTPSHelper::SendBasicRequest(L"auth.goonchamber.gay", L"accountLogin", 443, L"POST", std::string(username + ":" + password));
 
 	if (response.body[0] == '-') {
-		//std::vector<std::string> responseData = 
+		std::string parsedString = response.body.substr(1, response.body.size());
+		std::vector<std::string> responseData = split(parsedString, ':');
+
+		return LoginResponse(responseData[0], responseData[1]);
 	}
-	OutputDebugString(response.body.c_str());
 
 
-	return APIResponse(false, "s");
+	return LoginResponse(true, response.body);
 }
 
 

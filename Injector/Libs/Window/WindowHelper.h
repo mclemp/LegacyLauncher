@@ -14,6 +14,7 @@
 #include "../ImGui/imgui_impl_dx11.h"
 #include <unordered_map>
 #include <functional>
+#include <atomic>
 
 //readme.txt
 
@@ -33,8 +34,12 @@ public:
 	WindowHelper(const char* WindowName, const char* WindowKlassName);
 	bool StartWindow(HINSTANCE instance);
 
+	void ImGuiRenderThread();
+
 	std::function<void()> onContentDraw;
 	std::function<void()> onBackgroundDraw;
+
+	std::atomic<bool> renderDone = false;
 
 	ImVec4 TitleColor = ImVec4(0.2, 0.2, 0.2, 1);
 	ImVec4 WindowColor = ImVec4(0.2, 0.2, 0.2, 1);
@@ -53,6 +58,8 @@ protected:
 private:
 	const char* WindowName;
 	const char* WindowKlassName;
+
+	WNDCLASSEXA window_class = { 0 };
 
 	ID3D11Device* g_pd3dDevice = nullptr;
 	ID3D11DeviceContext* g_pd3dDeviceContext = nullptr;

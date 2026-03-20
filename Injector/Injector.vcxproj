@@ -141,7 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Libs\Networking\LCEOnlineServices.cpp" />
-    <ClCompile Include="Libs\Networking\HTTPHelper.cpp" />
+    <ClCompile Include="Libs\Networking\HTTPSHelper.cpp" />
     <ClCompile Include="Libs\Config\Config.cpp" />
     <ClCompile Include="Libs\ImGui\imgui.cpp" />
     <ClCompile Include="Libs\ImGui\imgui_demo.cpp" />
@@ -160,11 +160,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Libs\Panorama\PanoramaRenderer.cpp" />
+    <ClCompile Include="Libs\SoundEngine\SoundEngine.cpp" />
+    <ClCompile Include="Libs\ResourcePuller\ResourcePuller.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libs\Networking\LCEOnlineServices.h" />
     <ClInclude Include="Libs\Panorama\stb_image.h" />
-    <ClInclude Include="Libs\Networking\HTTPHelper.h" />
+    <ClInclude Include="Libs\Networking\HTTPSHelper.h" />
     <ClInclude Include="Libs\Config\Config.h" />
     <ClInclude Include="Libs\ImGui\imconfig.h" />
     <ClInclude Include="Libs\ImGui\imgui.h" />
@@ -180,6 +182,8 @@
     <ClInclude Include="Libs\Window\WindowHelper.h" />
     <ClInclude Include="Libs\Panorama\PanoramaRenderer.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Libs\SoundEngine\SoundEngine.h" />
+    <ClInclude Include="Libs\ResourcePuller\ResourcePuller.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Libs\Window\readme.txt" />

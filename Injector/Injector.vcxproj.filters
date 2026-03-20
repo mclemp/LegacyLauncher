@@ -66,6 +66,12 @@
     <ClCompile Include="Libs\Networking\LCEOnlineServices.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Libs\SoundEngine\SoundEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\ResourcePuller\ResourcePuller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libs\Window\WindowHelper.h">
@@ -120,6 +126,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Libs\Networking\LCEOnlineServices.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\SoundEngine\SoundEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\ResourcePuller\ResourcePuller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
