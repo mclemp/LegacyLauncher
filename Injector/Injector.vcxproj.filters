@@ -54,9 +54,6 @@
     <ClCompile Include="Libs\Config\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Libs\Networking\HTTPHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Libs\Window\MojanglesTTF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,6 +67,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Libs\ResourcePuller\ResourcePuller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\Networking\HTTPSHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\VersionManager\VersionManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\DownloadManager\DownloadManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\MiniZ\miniz.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,9 +122,6 @@
     <ClInclude Include="Libs\Config\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Libs\Networking\HTTPHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Libs\Panorama\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -132,6 +138,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Libs\ResourcePuller\ResourcePuller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\Networking\HTTPSHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\VersionManager\VersionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\DownloadManager\DownloadManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\MiniZ\miniz.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomRenderers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

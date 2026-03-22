@@ -1,13 +1,19 @@
 #include "HTTPSHelper.h"
 
-HttpsResponse HTTPSHelper::SendBasicRequest(const std::wstring& address, const std::wstring& path, int port, const wchar_t* method, const std::string& requestData, const std::wstring contentType) {
+#include <WinSock2.h>
+#include <WS2tcpip.h>
+#include <winhttp.h>
+#pragma comment(lib, "Ws2_32.lib")
+#pragma comment(lib, "winhttp.lib")
+
+HttpsResponse HTTPSHelper::SendBasicRequest(const std::wstring& address, const std::wstring& path, int port, const wchar_t* method, const std::string& requestData, const std::wstring contentType, bool secure) {
 	std::vector<std::wstring> headers;
 	headers.push_back(L"Content-Type: " + contentType);
 
-	return HTTPSHelper::SendAdvancedRequest(address, path, port, method, requestData, headers);
+	return HTTPSHelper::SendAdvancedRequest(address, path, port, method, requestData, headers, secure);
 }
 
-HttpsResponse HTTPSHelper::SendAdvancedRequest(const std::wstring& address, const std::wstring& path, int port, const wchar_t* method, const std::string& requestData, const std::vector<std::wstring>& headers) {
+HttpsResponse HTTPSHelper::SendAdvancedRequest(const std::wstring& address, const std::wstring& path, int port, const wchar_t* method, const std::string& requestData, const std::vector<std::wstring>& headers, bool secure) {
 	HttpsResponse response;
 	response.status = -1;
 
@@ -17,7 +23,7 @@ HttpsResponse HTTPSHelper::SendAdvancedRequest(const std::wstring& address, cons
 	HINTERNET hConnect = WinHttpConnect(hSession, address.c_str(), port, 0);
 	if (!hConnect) { WinHttpCloseHandle(hSession); return response; }
 
-	HINTERNET hRequest = WinHttpOpenRequest(hConnect, method, path.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, WINHTTP_FLAG_SECURE);
+	HINTERNET hRequest = WinHttpOpenRequest(hConnect, method, path.c_str(), NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, (secure ? WINHTTP_FLAG_SECURE : 0));
 	if (!hRequest) { WinHttpCloseHandle(hConnect); WinHttpCloseHandle(hSession); return response; }
 
 	for (const auto& header : headers) {

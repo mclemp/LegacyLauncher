@@ -127,7 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <CallingConvention>Cdecl</CallingConvention>
       <StringPooling>true</StringPooling>
@@ -140,6 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Libs\MiniZ\miniz.c" />
+    <ClCompile Include="Managers\DownloadManager\DownloadManager.cpp" />
     <ClCompile Include="Libs\Networking\LCEOnlineServices.cpp" />
     <ClCompile Include="Libs\Networking\HTTPSHelper.cpp" />
     <ClCompile Include="Libs\Config\Config.cpp" />
@@ -162,8 +164,12 @@
     <ClCompile Include="Libs\Panorama\PanoramaRenderer.cpp" />
     <ClCompile Include="Libs\SoundEngine\SoundEngine.cpp" />
     <ClCompile Include="Libs\ResourcePuller\ResourcePuller.cpp" />
+    <ClCompile Include="Managers\VersionManager\VersionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomRenderers.h" />
+    <ClInclude Include="Libs\MiniZ\miniz.h" />
+    <ClInclude Include="Managers\DownloadManager\DownloadManager.h" />
     <ClInclude Include="Libs\Networking\LCEOnlineServices.h" />
     <ClInclude Include="Libs\Panorama\stb_image.h" />
     <ClInclude Include="Libs\Networking\HTTPSHelper.h" />
@@ -184,6 +190,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Libs\SoundEngine\SoundEngine.h" />
     <ClInclude Include="Libs\ResourcePuller\ResourcePuller.h" />
+    <ClInclude Include="Managers\VersionManager\VersionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Libs\Window\readme.txt" />

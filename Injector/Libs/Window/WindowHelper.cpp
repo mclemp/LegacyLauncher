@@ -50,9 +50,7 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
     ::ShowWindow(this->windowHandle, SW_SHOWDEFAULT);
     ::UpdateWindow(this->windowHandle);
 
-    std::thread render([this]() {
-        this->ImGuiRenderThread();
-        });
+    std::thread render([this]() { this->ImGuiRenderThread(); });
 
     render.detach();
 
@@ -69,8 +67,8 @@ bool WindowHelper::StartWindow(HINSTANCE instance) {
             if (msg.message == WM_QUIT)
                 renderDone = true;
         }
+        Sleep(100);
     }
-    
 
     return 0;
 }
@@ -158,7 +156,7 @@ void WindowHelper::ImGuiRenderThread() {
 #ifdef USING_PANORAMA
         panorama.Render(g_pd3dDeviceContext, ImGui::GetTime());
 
-        ImGui::GetBackgroundDrawList()->AddImage((ImTextureID)panorama.GetSRV(), ImVec2(0, 0), ImGui::GetIO().DisplaySize);
+        ImGui::GetBackgroundDrawList()->AddImage((ImTextureID)panorama.GetSRV(), ImVec2(1, 1), ImVec2(ImGui::GetIO().DisplaySize.x - 2, ImGui::GetIO().DisplaySize.y - 2));
 #endif
 
         ImGui::SetNextWindowPos(ImVec2(0, title_bar_rect.bottom));
