@@ -477,9 +477,15 @@ void drawFriendsScreen() {
         if (!friendRequestResponse.empty()) {
             ImGui::SetCursorPos(ImVec2(20, 5));
 
-            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
-            ImGui::Text(friendRequestResponse.c_str());
-            ImGui::PopStyleColor();
+            if (friendRequestResponse.find("Success") == 0) {
+                ImGui::Text(friendRequestResponse.c_str());
+            } else {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
+                ImGui::Text(friendRequestResponse.c_str());
+                ImGui::PopStyleColor();
+            }
+
+            
         }
 
         static char username_inputBuffer[16];
