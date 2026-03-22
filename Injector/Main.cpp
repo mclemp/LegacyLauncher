@@ -403,7 +403,7 @@ void drawFriendsScreen() {
     auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - lastRefresh).count();
 
     ImGui::SetCursorPos(ImVec2(655, 45));
-    if (CustomGUI::Button("Refresh", 0.6f, elapsedTime < 3000)) { //3 second cooldown
+    if (CustomGUI::Button("Refresh", 0.6f, elapsedTime < 1500)) { //1.5 second cooldown
         lastRefresh = std::chrono::steady_clock::now();
         UpdateSocials();
     }
