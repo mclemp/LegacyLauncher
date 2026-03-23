@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{e9e63281-9ebe-47dd-8561-7e8b3b0de825}</ProjectGuid>
+    <RootNamespace>Injector</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Launcher</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <LLVMToolsVersion>19</LLVMToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <LLVMToolsVersion>19</LLVMToolsVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CallingConvention>Cdecl</CallingConvention>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <StringPooling>true</StringPooling>
+      <Optimization>MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CallingConvention>Cdecl</CallingConvention>
+      <StringPooling>true</StringPooling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Libs\MiniZ\miniz.c" />
+    <ClCompile Include="Managers\DownloadManager\DownloadManager.cpp" />
+    <ClCompile Include="Libs\Networking\LCEOnlineServices.cpp" />
+    <ClCompile Include="Libs\Networking\HTTPSHelper.cpp" />
+    <ClCompile Include="Libs\Config\Config.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_impl_dx10.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Libs\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Libs\Window\MojanglesTTF.cpp" />
+    <ClCompile Include="Libs\Window\WindowHelper.cpp" />
+    <ClCompile Include="Main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Libs\Panorama\PanoramaRenderer.cpp" />
+    <ClCompile Include="Libs\SoundEngine\SoundEngine.cpp" />
+    <ClCompile Include="Libs\ResourcePuller\ResourcePuller.cpp" />
+    <ClCompile Include="Managers\VersionManager\VersionManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CustomRenderers.h" />
+    <ClInclude Include="Libs\MiniZ\miniz.h" />
+    <ClInclude Include="Managers\DownloadManager\DownloadManager.h" />
+    <ClInclude Include="Libs\Networking\LCEOnlineServices.h" />
+    <ClInclude Include="Libs\Panorama\stb_image.h" />
+    <ClInclude Include="Libs\Networking\HTTPSHelper.h" />
+    <ClInclude Include="Libs\Config\Config.h" />
+    <ClInclude Include="Libs\ImGui\imconfig.h" />
+    <ClInclude Include="Libs\ImGui\imgui.h" />
+    <ClInclude Include="Libs\ImGui\imgui_impl_dx10.h" />
+    <ClInclude Include="Libs\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="Libs\ImGui\imgui_impl_dx12.h" />
+    <ClInclude Include="Libs\ImGui\imgui_impl_dx9.h" />
+    <ClInclude Include="Libs\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="Libs\ImGui\imgui_internal.h" />
+    <ClInclude Include="Libs\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Libs\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Libs\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Libs\Window\WindowHelper.h" />
+    <ClInclude Include="Libs\Panorama\PanoramaRenderer.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Libs\SoundEngine\SoundEngine.h" />
+    <ClInclude Include="Libs\ResourcePuller\ResourcePuller.h" />
+    <ClInclude Include="Managers\VersionManager\VersionManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Libs\Window\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Libs\Panorama\Images\1\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\1\panorama_5.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\2\panorama_5.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\3\panorama_5.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_0.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_1.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_2.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_3.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_4.png" />
+    <Image Include="Libs\Panorama\Images\4\panorama_5.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

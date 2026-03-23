@@ -1,0 +1,25 @@
+[
+  {
+    "Name": "Build All",
+    "Projects": [
+      {
+        "Path": "MainDLL\\MainDLL.vcxproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "Launcher\\Launcher.vcxproj",
+        "Action": "Start",
+        "DebugTarget": "Local Windows Debugger"
+      }
+    ]
+  },
+  {
+    "Name": "Build Launcher",
+    "Projects": [
+      {
+        "Path": "Launcher\\Launcher.vcxproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

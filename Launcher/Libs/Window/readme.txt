@@ -1,0 +1,1 @@
+based on https://github.com/grassator/win32-window-custom-titlebar and https://github.com/ocornut/imgui/blob/master/examples/example_win32_directx11/main.cpp
