@@ -1,0 +1,45 @@
+name: Nightly Release
+
+on:
+  workflow_dispatch: 
+  push:
+    branches:
+    - 'main'
+    paths-ignore:
+      - '.gitignore'
+      - '*.md'
+      - '.github/*.md'
+jobs:
+  build:
+    name: Build Windows64
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: Build
+      run: MSBuild.exe Launcher.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+    - name: Remove Useless files
+      run: del ./x64/Release/*.pdb
+
+    #- name: Zip Build
+    #  run: 7z a -r MCLEWindows64.zip ./x64/Release/*
+
+    - name: Update release
+      uses: andelf/nightly-release@main
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: nightly
+        name: Nightly Release
+        body: |
+            Minecraft Legacy Edition Multiplayer Launcher, Works on Windows, Linux (Proton, Wine) & MacOS Via CrossOver Or Wine.
+            Report Issues Here: [discord.gg/xjc9JW4Bfp](https://discord.gg/xjc9JW4Bfp) or [mclegacyedition.xyz](https://mclegacyedition.xyz).
+        files: |
+            ./x64/Release/Launcher.exe
